@@ -1,0 +1,11 @@
+# Framework principal
+Django>=5.0,<6.0
+
+# Manejo de imágenes (Obligatorio para ImageField)
+Pillow>=10.0.0
+
+# Servidor de aplicaciones para producción (AWS/Gunicorn)
+gunicorn>=21.2.0
+
+# Utilidades (Opcional, pero recomendado para bases de datos externas como RDS)
+psycopg2-binary>=2.9.9
