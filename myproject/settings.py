@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'galeria',
 ]
 
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Cloud', # El nombre de tu base de datos en RDS
+        'USER': 'admin',
+        'PASSWORD': 'admin1234', # La contraseña que definiste al crear la instancia
+        'HOST': 'database-1.cgosspuy0byb.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -118,8 +123,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = f'supercubo.s3.us-east-1.amazonaws.com/'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
@@ -127,3 +131,21 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
+
+# Configuración AWS S3
+AWS_STORAGE_BUCKET_NAME = 'supercubo'
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_CUSTOM_DOMAIN = 'supercubo.s3.us-east-1.amazonaws.com'
+
+# Esto le dice a Django dónde guardar los archivos
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# Las URLs de tus imágenes ahora apuntarán a S3
+MEDIA_URL = f'supercubo.s3.us-east-1.amazonaws.com/'

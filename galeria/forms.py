@@ -1,11 +1,14 @@
 from django import forms
-from .models import Imagen
+from .models import GaleriaFotos
 
 class ImagenForm(forms.ModelForm):
+    # Campo extra para subir el archivo (no está en la BD, es solo para el frontend)
+    archivo = forms.ImageField(label="Seleccionar Imagen", required=False)
+
     class Meta:
-        model = Imagen
-        fields = ['titulo', 'archivo']
+        model = GaleriaFotos
+        fields = ['foto', 'estado'] # Campos reales de la BD
         widgets = {
-            'titulo': forms.TextInput(attrs={'class': 'form-control bg-dark text-white border-secondary', 'placeholder': 'Título de la imagen'}),
-            'archivo': forms.FileInput(attrs={'class': 'form-control bg-dark text-white border-secondary'}),
+            'foto': forms.TextInput(attrs={'class': 'form-control bg-dark text-white border-secondary', 'placeholder': 'Nombre del archivo'}),
+            'estado': forms.TextInput(attrs={'class': 'form-control bg-dark text-white border-secondary', 'placeholder': 'Estado (ej: Activo)'}),
         }
